@@ -74,42 +74,4 @@ body {
 .slider::-webkit-scrollbar-track {
   background: #222;
 }
-/* Tombol Kunjungi */
-.btn-visit,
-.btn-follow {
-  display: inline-block;
-  margin: 6px 5px 0;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(4px);
-}
 
-/* Kunjungi Style */
-.btn-visit {
-  background: rgba(29, 161, 242, 0.15);
-  border: 1px solid #1DA1F2;
-  color: #1DA1F2;
-}
-.btn-visit:hover {
-  background: #1DA1F2;
-  color: #fff;
-}
-
-/* Follow Style */
-.btn-follow {
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid #22c55e;
-  color: #22c55e;
-}
-.btn-follow:hover {
-  background: #22c55e;
-  color: #fff;
-}
-
-/* Grouping Buttons */
-.btn-group {
-  margin-top: 8px;
-}
