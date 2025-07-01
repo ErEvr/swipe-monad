@@ -1,21 +1,76 @@
-body {
+/* Reset */
+* {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background: #111;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #111;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Slider wrapper */
 .slider {
   overflow-x: scroll;
   white-space: nowrap;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  position: relative;
 }
 
+/* Slide items */
+.slides a {
+  display: inline-block;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  scroll-snap-align: center;
+  text-decoration: none;
+  color: white;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.slides a:hover img {
+  transform: scale(1.03);
+  filter: brightness(0.7);
+}
+
+/* Image style */
 .slides img {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  display: inline-block;
-  scroll-snap-align: center;
+}
+
+/* Caption style */
+.caption {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: #1DA1F2;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+/* Custom scrollbar */
+.slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+.slider::-webkit-scrollbar-thumb {
+  background: #1DA1F2;
+  border-radius: 10px;
+}
+
+.slider::-webkit-scrollbar-track {
+  background: #222;
 }
