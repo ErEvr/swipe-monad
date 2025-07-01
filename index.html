@@ -14,25 +14,25 @@
     }
 
     .slider {
-      overflow-x: scroll;
-      white-space: nowrap;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
+      position: relative;
+      overflow: hidden;
     }
 
-    .slides a {
-      display: inline-block;
-      width: 100vw;
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      will-change: transform;
+    }
+
+    .slide {
+      min-width: 100vw;
       height: 100vh;
       position: relative;
-      scroll-snap-align: center;
-      text-decoration: none;
-      color: white;
     }
 
-    .slides img {
-      width: 100vw;
-      height: 100vh;
+    .slide img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
 
@@ -46,58 +46,145 @@
       background: rgba(0, 0, 0, 0.4);
       padding: 10px 0;
     }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .nav-left {
+      left: 10px;
+    }
+
+    .nav-right {
+      right: 10px;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #555;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: #1DA1F2;
+    }
   </style>
 </head>
 <body>
-  <div class="slider">
-  <div class="slides">
 
-    <a href="https://x.com/Littleprin45060" target="_blank">
+<div class="slider">
+  <button class="nav-btn nav-left" onclick="prevSlide()">‹</button>
+  <div class="slides" id="slideContainer">
+
+    <!-- Ganti div .slide untuk tiap akun -->
+    <a class="slide" href="https://x.com/Littleprin45060" target="_blank">
       <img src="img/1751273008509.jpg" alt="@Littleprin45060" />
       <p class="caption">@Littleprin45060</p>
     </a>
 
-    <a href="https://x.com/DalilahPutri4" target="_blank">
+    <a class="slide" href="https://x.com/DalilahPutri4" target="_blank">
       <img src="img/1751273022718.jpg" alt="@DalilahPutri4" />
       <p class="caption">@DalilahPutri4</p>
     </a>
 
-    <a href="https://x.com/Giselle20_" target="_blank">
+    <a class="slide" href="https://x.com/Giselle20_" target="_blank">
       <img src="img/1751273053309.jpg" alt="@Giselle20_" />
       <p class="caption">@Giselle20_</p>
     </a>
 
-    <a href="https://x.com/berzanorg" target="_blank">
+    <a class="slide" href="https://x.com/berzanorg" target="_blank">
       <img src="img/1751273068640.jpg" alt="@berzanorg" />
       <p class="caption">@berzanorg</p>
     </a>
 
-    <a href="https://x.com/0x_eunice" target="_blank">
+    <a class="slide" href="https://x.com/0x_eunice" target="_blank">
       <img src="img/1751353728417.jpg" alt="@0x_eunice" />
       <p class="caption">@0x_eunice</p>
     </a>
 
-   <a href="https://x.com/Widzeth" target="_blank">
+    <a class="slide" href="https://x.com/Widzeth" target="_blank">
       <img src="img/1751353616607.jpg" alt="@Widzeth" />
       <p class="caption">@Widzeth</p>
     </a>
 
-   <a href="https://x.com/michh_eth" target="_blank">
+    <a class="slide" href="https://x.com/michh_eth" target="_blank">
       <img src="img/1751353650237.jpg" alt="@michh_eth" />
       <p class="caption">@michh_eth</p>
     </a>
 
-   <a href="https://x.com/1Cilineth" target="_blank">
+    <a class="slide" href="https://x.com/1Cilineth" target="_blank">
       <img src="img/1751353677631.jpg" alt="@1Cilineth" />
       <p class="caption">@1Cilineth</p>
     </a>
 
-   <a href="https://x.com/celiinneey" target="_blank">
-     <img src="img/1751353702585.jpg" alt="@celiinneey" />
-     <p class="caption">@celiinneey</p>
-   </a>
-    
+    <a class="slide" href="https://x.com/celiinneey" target="_blank">
+      <img src="img/1751353702585.jpg" alt="@celiinneey" />
+      <p class="caption">@celiinneey</p>
+    </a>
   </div>
-  </div>
+
+  <button class="nav-btn nav-right" onclick="nextSlide()">›</button>
+
+  <div class="dots" id="dotsContainer"></div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const slideContainer = document.getElementById('slideContainer');
+  const dotsContainer = document.getElementById('dotsContainer');
+  let currentSlide = 0;
+
+  slides.forEach((_, idx) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.onclick = () => goToSlide(idx);
+    dotsContainer.appendChild(dot);
+  });
+
+  function updateSlider() {
+    slideContainer.style.transform = `translateX(-${currentSlide * 100}vw)`;
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentSlide].classList.add('active');
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlider();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlider();
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateSlider();
+  }
+
+  updateSlider();
+</script>
+
 </body>
 </html>
